@@ -1,0 +1,23 @@
+{
+  "name": "backend-assignment",
+  "version": "1.0.0",
+  "description": "Instant sharing backend",
+  "main": "server.js",
+  "scripts": {
+    "test": "npm test"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/riccardosacco/backend-assignment.git"
+  },
+  "author": "Riccardo Sacco",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/riccardosacco/backend-assignment/issues"
+  },
+  "homepage": "https://github.com/riccardosacco/backend-assignment#readme",
+  "dependencies": {
+    "dotenv": "^8.2.0",
+    "express": "^4.17.1"
+  }
+}
