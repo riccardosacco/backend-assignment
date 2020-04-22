@@ -4,6 +4,7 @@
   "description": "Instant sharing backend",
   "main": "server.js",
   "scripts": {
+    "start": "npm start",
     "test": "npm test"
   },
   "repository": {
