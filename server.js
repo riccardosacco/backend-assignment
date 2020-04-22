@@ -3,8 +3,12 @@ const express = require("express");
 // Load environment variables
 require("dotenv").config();
 
+// Connect to DB
+const connectDB = require("./config/db");
+connectDB();
+
 const app = express();
-const PORT = process.env.PORT || 5000;
+const PORT = process.env.PORT || 3000;
 
 // @route   GET /
 // @desc    Get api info
