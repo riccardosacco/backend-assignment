@@ -4,25 +4,27 @@
 
 ## Usage
 
-1. Build the docker container images
+### Build the docker container images
 
 ```
 docker-compose up
 ```
 
-There are three containers:
+You need to wait until you see the message **[*] Waiting for messages in the queue**
+
+There are three docker containers:
 
 - web (NodeJS custom image)
 - mongo
 - rabbitmq
 
-2. Go to the frontend URL below and submit the form
+Go to the frontend URL below and submit the form
 
 ### Frontend: http://localhost:3000
 
 ![Frontend](/public/docs/frontend.png)
 
-3. Use the documentation below to get the resources from the backend
+Use the documentation below to get the resources from the backend
 
 ### Backend: http://localhost:3000/api/v1
 
@@ -52,7 +54,7 @@ URL: http://localhost:3000/api/v1/instants
 
 | Key       | Value                    |
 | --------- | ------------------------ |
-| photo     |                          |
+| photo     | (png,jpg)                |
 | user      | Riccardo Sacco           |
 | latitude  | 45.12345                 |
 | longitude | 12.12345                 |

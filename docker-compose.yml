@@ -1,5 +1,14 @@
 version: "3"
 services:
+  rabbitmq:
+    container_name: rabbitmq
+    image: rabbitmq:3-management
+    ports:
+      - "5672:5672"
+      - "15672:15672"
+    environment:
+      - RABBITMQ_DEFAULT_USER=guest
+      - RABBITMQ_DEFAULT_PASS=guest
   web:
     container_name: web
     restart: always
@@ -8,14 +17,12 @@ services:
       - "3000:3000"
     links:
       - mongo
+      - rabbitmq
+    depends_on:
+      - mongo
+      - rabbitmq
   mongo:
     container_name: mongo
     image: mongo
     ports:
-      - "27018:27017"
-  rabbitmq:
-    container_name: rabbitmq
-    image: bitnami/rabbitmq
-    ports:
-      - "5672:5672"
-      - "15672:15672"
+      - "27017:27017"
