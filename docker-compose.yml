@@ -1,12 +1,21 @@
-version: "2"
+version: "3"
 services:
   web:
+    container_name: web
+    restart: always
     build: .
     ports:
       - "3000:3000"
     links:
       - mongo
   mongo:
+    container_name: mongo
     image: mongo
     ports:
       - "27018:27017"
+  rabbitmq:
+    container_name: rabbitmq
+    image: bitnami/rabbitmq
+    ports:
+      - "5672:5672"
+      - "15672:15672"

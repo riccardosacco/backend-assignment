@@ -14,9 +14,7 @@ const PORT = process.env.PORT || 3000;
 // Body parser
 app.use(express.json());
 
-if (process.env.NODE_ENV === "development") {
-  app.use(morgan("dev"));
-}
+app.use(morgan("dev"));
 
 // Set static folder
 app.use(express.static("public"));

@@ -1,5 +1,5 @@
 # Set node version
-FROM node:10
+FROM node:latest
 
 # Create app directory
 WORKDIR /usr/src/app
@@ -13,8 +13,8 @@ RUN npm install
 # Copy app source into work directory
 COPY . .
 
-# Bind to port 8080
-EXPOSE 8080
+# Bind to port 3000
+EXPOSE 3000
 
 # Start the node server
 CMD ["npm","start"]

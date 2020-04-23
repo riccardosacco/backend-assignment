@@ -8,7 +8,7 @@ const fs = require("fs");
 const randomString = require("../utils/randomString");
 
 const storage = multer.diskStorage({
-  destination: "./public/uploads/",
+  destination: "./public/tmp/",
   filename: function (req, file, cb) {
     // Find image extension
     const extArray = file.mimetype.split("/");
@@ -55,6 +55,10 @@ router.get("/:id", async (req, res) => {
   try {
     let instant = await Instant.findById(req.params.id);
 
+    if (!instant) {
+      return res.status(404).send({ msg: "Instant not found" });
+    }
+
     instant.photo = `${process.env.DEPLOY_URL}/uploads/${instant.photo}`;
 
     res.send(instant);
@@ -97,8 +101,8 @@ router.post("/", upload.single("photo"), async (req, res) => {
     // Resize image
     await sharp(photo.path)
       .resize({ width: 140, height: 140 })
-      .jpeg({ quality: 100 })
-      .toFile(`./public/resized/${photo.filename}`);
+      .toFile(`./public/uploads/${photo.filename}`);
+    fs.unlinkSync(photo.path);
 
     const inserted = await Instant.create(instant);
 
