@@ -2,7 +2,21 @@ const express = require("express");
 const router = express.Router();
 const multer = require("multer");
 
-const upload = multer({ dest: "../public/uploads" });
+// Import randomString function
+const randomString = require("../utils/randomString");
+
+const storage = multer.diskStorage({
+  destination: "./public/uploads/",
+  filename: function (req, file, cb) {
+    // Find image extension
+    const extArray = file.mimetype.split("/");
+    const extension = extArray[extArray.length - 1];
+
+    cb(null, `${randomString(15)}.${extension}`);
+  },
+});
+
+const upload = multer({ storage });
 
 const Instant = require("../models/Instant");
 
@@ -47,14 +61,19 @@ router.get("/:id", async (req, res) => {
 // @desc    Create single instant
 // @access  Public
 // @params  {instant}
-router.post("/", upload.single("image"), async (req, res) => {
+router.post("/", upload.single("photo"), async (req, res) => {
   try {
-    const instant = req.body;
-    const image = req.file;
+    const photo = req.file;
 
-    if (!image) {
+    const instant = {
+      ...req.body,
+      photo: photo.filename,
+      weight: photo.size,
+    };
+
+    if (!photo) {
       return res.send(400).status({
-        msg: "No image found, please upload one",
+        msg: "No photo found, please upload one",
       });
     }
 
@@ -64,9 +83,9 @@ router.post("/", upload.single("image"), async (req, res) => {
       });
     }
 
-    //await Instant.create(req.body);
+    const inserted = await Instant.create(instant);
 
-    res.send({ instant, file });
+    res.send(inserted);
   } catch (err) {
     console.log(err);
   }
