@@ -1,4 +1,5 @@
 const express = require("express");
+const morgan = require("morgan");
 
 // Load environment variables
 require("dotenv").config();
@@ -10,11 +11,23 @@ connectDB();
 const app = express();
 const PORT = process.env.PORT || 3000;
 
+// Body parser
+app.use(express.json());
+
+if (process.env.NODE_ENV === "development") {
+  app.use(morgan("dev"));
+}
+
+// Set static folder
+app.use(express.static("public"));
+
+app.use("/api/v1/instants", require("./routes/instants"));
+
 // @route   GET /
 // @desc    Get api info
 // @access  Public
 // @params  No params
-app.get("/", (req, res) => {
+app.get("/api/v1", (req, res) => {
   res.send({
     msg: "Hello world",
   });
