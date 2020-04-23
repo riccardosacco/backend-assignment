@@ -1,10 +1,34 @@
-# Instant sharing backend
+# Instant photo sharing
 
 ---
 
+## Usage
+
+1. Build the docker container images
+
+```
+docker-compose up
+```
+
+There are three containers:
+
+- web (NodeJS custom image)
+- mongo
+- rabbitmq
+
+2. Go to the frontend URL below and submit the form
+
+### Frontend: http://localhost:3000
+
+![Frontend](/public/docs/frontend.png)
+
+3. Use the documentation below to get the resources from the backend
+
+### Backend: http://localhost:3000/api/v1
+
 ## API Documentation
 
-# Instants
+[Postman docs link](https://documenter.getpostman.com/view/5733214/Szf9XTbm?version=latest)
 
 ## Indices
 
@@ -21,18 +45,18 @@
 ```bash
 Method: POST
 Type: FORMDATA
-URL: {{APIURL}}/api/v1/instants
+URL: http://localhost:3000/api/v1/instants
 ```
 
 **_Body:_**
 
-| Key       | Value                    | Description |
-| --------- | ------------------------ | ----------- |
-| photo     |                          |             |
-| user      | Riccardo Sacco           |             |
-| latitude  | 45.12345                 |             |
-| longitude | 12.12345                 |             |
-| timestamp | 2020-04-22T12:29:18+0000 |             |
+| Key       | Value                    |
+| --------- | ------------------------ |
+| photo     |                          |
+| user      | Riccardo Sacco           |
+| latitude  | 45.12345                 |
+| longitude | 12.12345                 |
+| timestamp | 2020-04-22T12:29:18+0000 |
 
 ### 2. Get single instant
 
@@ -40,8 +64,7 @@ URL: {{APIURL}}/api/v1/instants
 
 ```bash
 Method: GET
-Type:
-URL: {{APIURL}}/api/v1/instants/5ea1d4dd71817200123343ac
+URL: http://localhost:3000/api/v1/instants/5ea1d4dd71817200123343ac
 ```
 
 ### 3. Get all instants
@@ -50,22 +73,5 @@ URL: {{APIURL}}/api/v1/instants/5ea1d4dd71817200123343ac
 
 ```bash
 Method: GET
-Type:
-URL: {{APIURL}}/api/v1/instants
-```
-
----
-
-## Generate documentation
-
-### HTML
-
-```
-docgen build -i public/docs/postman.json -o public/docs/index.html
-```
-
-### Markdown
-
-```
-docgen build -i public/docs/postman.json -o public/docs/index.md -m
+URL: http://localhost:3000/api/v1/instants
 ```
