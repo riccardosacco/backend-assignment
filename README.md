@@ -28,6 +28,14 @@ Use the documentation below to get the resources from the backend
 
 ### Backend: http://localhost:3000/api/v1
 
+## Tests
+
+To run tests use this command
+
+```
+npm test
+```
+
 ## API Documentation
 
 [Postman docs link](https://documenter.getpostman.com/view/5733214/Szf9XTbm?version=latest)

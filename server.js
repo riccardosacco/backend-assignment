@@ -35,9 +35,11 @@ app.get("/api/v1", (req, res) => {
 });
 
 // Listen server on PORT
-app.listen(PORT, () => {
+const server = app.listen(PORT, () => {
   console.log(`Server started on port ${PORT}`);
 });
 
 // Connect to RabbitMQ
 require("./config/amqp");
+
+module.exports = server;
