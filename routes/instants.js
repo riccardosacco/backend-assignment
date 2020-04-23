@@ -1,6 +1,8 @@
 const express = require("express");
 const router = express.Router();
 const multer = require("multer");
+const sharp = require("sharp");
+const fs = require("fs");
 
 // Import randomString function
 const randomString = require("../utils/randomString");
@@ -12,6 +14,7 @@ const storage = multer.diskStorage({
     const extArray = file.mimetype.split("/");
     const extension = extArray[extArray.length - 1];
 
+    // Save file with random string filename
     cb(null, `${randomString(15)}.${extension}`);
   },
 });
@@ -37,6 +40,9 @@ router.get("/", async (req, res) => {
 
     res.send(instants);
   } catch (err) {
+    res.status(500).send({
+      msg: "Internal Server Error",
+    });
     console.log(err);
   }
 });
@@ -53,6 +59,9 @@ router.get("/:id", async (req, res) => {
 
     res.send(instant);
   } catch (err) {
+    res.status(500).send({
+      msg: "Internal Server Error",
+    });
     console.log(err);
   }
 });
@@ -83,10 +92,21 @@ router.post("/", upload.single("photo"), async (req, res) => {
       });
     }
 
+    // TODO: Send job to rabbitmq queue
+
+    // Resize image
+    await sharp(photo.path)
+      .resize({ width: 140, height: 140 })
+      .jpeg({ quality: 100 })
+      .toFile(`./public/resized/${photo.filename}`);
+
     const inserted = await Instant.create(instant);
 
-    res.send(inserted);
+    res.send({ inserted, photo });
   } catch (err) {
+    res.status(500).send({
+      msg: "Internal Server Error",
+    });
     console.log(err);
   }
 });
