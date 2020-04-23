@@ -27,7 +27,10 @@ app.use("/api/v1/instants", require("./routes/instants"));
 // @params  No params
 app.get("/api/v1", (req, res) => {
   res.send({
-    msg: "Hello world",
+    msg: "Welcome to Instants photo uploader API",
+    resources: {
+      instants: `${process.env.DEPLOY_URL}/api/v1/instants`,
+    },
   });
 });
 
@@ -35,3 +38,6 @@ app.get("/api/v1", (req, res) => {
 app.listen(PORT, () => {
   console.log(`Server started on port ${PORT}`);
 });
+
+// Connect to RabbitMQ
+require("./config/amqp");

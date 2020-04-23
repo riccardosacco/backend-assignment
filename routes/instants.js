@@ -1,8 +1,7 @@
 const express = require("express");
 const router = express.Router();
 const multer = require("multer");
-const sharp = require("sharp");
-const fs = require("fs");
+const amqp = require("amqplib");
 
 // Import randomString function
 const randomString = require("../utils/randomString");
@@ -97,16 +96,32 @@ router.post("/", upload.single("photo"), async (req, res) => {
     }
 
     // TODO: Send job to rabbitmq queue
+    amqp.connect(process.env.AMQP_URL).then(function (conn) {
+      return conn
+        .createChannel()
+        .then(function (ch) {
+          var q = "instants";
+          var msg = photo.path;
 
-    // Resize image
-    await sharp(photo.path)
-      .resize({ width: 140, height: 140 })
-      .toFile(`./public/uploads/${photo.filename}`);
-    fs.unlinkSync(photo.path);
+          var ok = ch.assertQueue(q, { durable: false });
+
+          return ok.then(function (_qok) {
+            ch.sendToQueue(q, Buffer.from(msg));
+            console.log(" [x] Sent '%s'", msg);
+            return ch.close();
+          });
+        })
+        .finally(function () {
+          conn.close();
+        });
+    });
 
     const inserted = await Instant.create(instant);
 
-    res.send({ inserted, photo });
+    res.send({
+      ...inserted._doc,
+      photo: `${process.env.DEPLOY_URL}/uploads/${inserted.photo}`,
+    });
   } catch (err) {
     res.status(500).send({
       msg: "Internal Server Error",
