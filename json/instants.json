@@ -1,0 +1,22 @@
+[
+  {
+    "id": "5ea0a974db2cf05ba2abc481",
+    "user": "Riccardo Sacco",
+    "photo": "EreqkndYeqpALpg.jpg",
+    "weight": 1000,
+    "length": "",
+    "latitude": 45.12345,
+    "longitude": 12.12345,
+    "timestamp": "2020-04-22T12:29:18+0000"
+  },
+  {
+    "id": "5ea1980286f1de3b071c00d1",
+    "user": "Francesco Brondi",
+    "photo": "DOOSGPWJORUIhcs.jpg",
+    "weight": 2500,
+    "length": "",
+    "latitude": 41.12345,
+    "longitude": 9.12345,
+    "timestamp": "2020-04-18T12:29:18+0000"
+  }
+]

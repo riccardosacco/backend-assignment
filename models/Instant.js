@@ -16,7 +16,7 @@ const InstantSchema = new mongoose.Schema({
   length: Number,
   latitude: Number,
   longitude: Number,
-  createdAt: {
+  timestamp: {
     type: Date,
     default: Date.now,
   },
